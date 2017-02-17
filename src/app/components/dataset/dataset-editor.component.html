@@ -1,0 +1,48 @@
+<form>
+          <h3 *ngIf="!editing">Details</h3>
+
+          <section class="form-block">
+              <div class="form-group">
+                  <label for="name">Name</label>
+                  <input type="text" id="name" [(ngModel)]="model.name" name="name" size="45">
+              </div>
+
+              <div class="form-group">
+                  <label for="location">Data File</label>
+                  <input type="file" (change)="onUpload($event)" name="location">
+                  <button type="submit" (click)="onAnalyze()" class="btn btn-outline">Analyze</button>
+              </div>
+          </section>
+ <div *ngIf="model">        
+    <h3> Columns </h3>
+    <clr-datagrid>
+        <clr-dg-column>Name</clr-dg-column>
+        <clr-dg-column>Type</clr-dg-column>
+        <clr-dg-column>Ignore</clr-dg-column>
+        
+        
+        <clr-dg-row *ngFor="let c of model.columns">
+            <clr-dg-cell> {{c.name}} </clr-dg-cell>
+            <clr-dg-cell> 
+                <div class="select">
+                   <select name="select{{c.id}}" [(ngModel)]="c.type">
+                   <option *ngFor="let t of c.types" [value]="t.value" [selected]="t.value==c.type">  
+                        {{t.display}}
+                   </option>
+                   </select>
+                </div>
+            </clr-dg-cell>
+            <clr-dg-cell> 
+                <div class="checkbox">
+                    <input type="checkbox" id="ignore{{c.id}}" name="ignore{{c.id}}" [(ngModel)]="c.ignore">
+                    <label for="ignore{{c.id}}">Ignore</label>
+                </div>
+            </clr-dg-cell>        
+        </clr-dg-row>
+    </clr-datagrid>
+</div>    
+   <div>
+      <button *ngIf="!editing" type="submit" (click)="onSubmit()" class="btn btn-primary">Add</button>
+      <button *ngIf="editing" type="submit" class="btn btn-warning">Update</button>          
+    </div>
+</form>

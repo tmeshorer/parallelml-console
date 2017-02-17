@@ -1,0 +1,23 @@
+ 
+ <button (click) = 'onNew()'>Add Study</button>
+ <clr-datagrid>
+    <clr-dg-column>Dataset</clr-dg-column>
+    <clr-dg-column>Created</clr-dg-column>
+    <clr-dg-column>Status</clr-dg-column>
+    <clr-dg-column>Actions</clr-dg-column>
+
+    <clr-dg-row *ngFor="let s of model">
+         <clr-dg-cell> {{s.name}} </clr-dg-cell>
+         <clr-dg-cell> {{s.created}} </clr-dg-cell>
+         <clr-dg-cell> {{s.state_name}} </clr-dg-cell>
+         <clr-dg-cell>
+            <label (click) = 'onReport(s.id)' class='label clickable'>Report</label>
+            <label (click) = 'onDetails(s.id)' class='label clickable'>Details</label>
+            <label (click) = 'onDelete(s.id)' class='label clickable'>Delete</label>
+            <label (click) = 'onRun(s.id)' class='label clickable'>Run</label>
+
+        </clr-dg-cell>
+            
+    </clr-dg-row>
+    
+</clr-datagrid>

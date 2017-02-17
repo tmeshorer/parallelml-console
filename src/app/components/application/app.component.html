@@ -1,0 +1,45 @@
+<clr-main-container>
+  <clr-header>
+    <div class="branding">
+      <a href="#" class="nav-link">
+        <span class="title">Parallel ML</span>
+      </a>
+    </div>
+    <div class="header-actions">
+    </div>
+  </clr-header>
+  <nav class="sub-nav" [clr-nav-level]="1">
+    <ul class="nav">
+      <li class="nav-item">
+        <a class="nav-link" href="#" [routerLink]="['/home']" [class.active]="router.url==='/home'">Home</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" [routerLink]="['/datasets']" [class.active]="router.url==='/documents'">Documents</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" [routerLink]="['/studies']" [class.active]="router.url==='/studies'">Studies</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" [routerLink]="['/studies']" [class.active]="router.url==='/studies'">Prediction Services</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" [routerLink]="['/userprofile']" [class.active]="router.url==='/userprofile'">My Profile</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="#" [routerLink]="['/login']" [class.active]="router.url==='/userprofile'">Login</a>
+      </li>
+      <div class="navbar-header">
+  
+  <button class="btn btn-primary btn-margin" (click)="auth.login()" *ngIf="!auth.authenticated()">Log In</button>
+  <button class="btn btn-primary btn-margin" (click)="auth.logout()" *ngIf="auth.authenticated()">Log Out</button>
+</div>
+    </ul>
+  </nav>
+  <div class="content-container">
+    <div class="content-area">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</clr-main-container>
+
+

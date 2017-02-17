@@ -1,0 +1,30 @@
+ 
+ <div *ngIf="showNew">
+ <add-configuration (onNewconfigurationOutput) = "onNewConfiguration($event)"></add-configuration>
+ </div>
+ <button (click) = 'onNew()'>Add Configuration</button>
+ <clr-datagrid>
+    
+    <clr-dg-column>Name</clr-dg-column>
+    <clr-dg-column>PredataParam</clr-dg-column>
+    <clr-dg-column>PreFeatureParam</clr-dg-column>
+    <clr-dg-column>AlgParam</clr-dg-column>
+    <clr-dg-column>Result</clr-dg-column>
+    <clr-dg-column>Length</clr-dg-column>
+
+    <clr-dg-row *ngFor="let c f configurations">
+        <clr-dg-cell> {{c.name}} </clr-dg-cell>
+        <clr-dg-cell> {{c.predata_param}} </clr-dg-cell>
+        <clr-dg-cell> {{c.pre_feature_param}} </clr-dg-cell>
+        <clr-dg-cell> {{c.alg_param}} </clr-dg-cell>
+        <clr-dg-cell> {{c.result}} </clr-dg-cell>
+        <clr-dg-cell> {{c.length()}} </clr-dg-cell>
+        <clr-dg-cell>
+            <label (click) = 'onReport(configuration.id)' class='label clickable'>Report</label>
+            <label (click) = 'onDetails(configuration.id)' class='label clickable'>Details</label>
+            <label (click) = 'onDelete(configuration.id)' class='label clickable'>Delete</label>
+        </clr-dg-cell>
+            
+    </clr-dg-row>
+    
+</clr-datagrid>

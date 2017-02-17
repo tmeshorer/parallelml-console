@@ -1,0 +1,159 @@
+<form>
+        <div class="row">
+             <div class="col-xs-4">
+                 <span>Study Details</span>
+             </div>
+             <div class="col-xs-6">
+             </div>
+             <div class="col-xs-2">
+                 <span>Running</span>
+             </div>
+        </div>     
+        <div class="row">
+           <div class="col-xs-12">
+               <div class="form-group">
+                <label for="name">Study Name</label>
+                <input type="text" name ="name" id="name" placeholder="Enter study name here" [(ngModel)]="model.name">
+              </div> 
+           </div>   
+        </div>  
+               <div class="form-group">
+                <label for="lossn">Dataset</label>
+                <div class="select">
+                    <select name="selectDset" [(ngModel)]="selectedDset">
+                    <option *ngFor="let d of datasets" [selected]="selectedDset==d">  
+                            {{d.name}}
+                    </option>
+                    </select>
+                </div>         
+              </div>  
+                <div class="form-group">
+                    <label for="lossn">Estimator Type</label>
+                    <div *ngFor="let e of model.estimator_types">
+                        <div class="radio-inline">
+                            <input type="radio" name="estimator" id="{{e.display}}" [(ngModel)]="model.et" [value]="e.value">
+                            <label for="{{e.display}}">{{e.display}}</label>
+                        </div>
+                    </div> 
+                </div>
+            <div *ngIf="model.estimator_type == 'classification'" class="form-group">
+              <label for="lossn">Objective</label>
+              <div class="select">
+                  <select name="classification_metrics" [(ngModel)]="model.objective">
+                      <option *ngFor="let m of model.classification_metrics" 
+                                [value]="m.value" 
+                                [selected]="m.value==model.objective">  
+                          {{m.display}}
+                      </option>
+                  </select>
+              </div>
+          </div>   
+       <div *ngIf="model.estimator_type == 'regression'" class="form-group">
+              <label for="lossn">Objective</label>
+              <div class="select">
+                  <select name="regression_metrics" [(ngModel)]="model.objective">
+                      <option *ngFor="let m of model.regression_metrics" 
+                                [value]="m.value" 
+                                [selected]="m.value==model.objective">  
+                          {{m.display}}
+                      </option>
+                  </select>
+              </div>
+        </div>
+
+        <!-- trainting -->
+        <div class="form-group">
+              <label for="training">Training (%)</label>
+              <div class="select">
+                  <select name="training" [(ngModel)]="model.pct_training">
+                      <option *ngFor="let p of model.precents" 
+                                [value]="p.value" 
+                                [selected]="p.value==model.pct_training">  
+                          {{p.display}} %
+                      </option>
+                  </select>
+              </div>
+        </div>
+
+        <!-- validation -->
+        <div class="form-group">
+              <label for="validation">Validation (%)</label>
+              <div class="select">
+                  <select name="validation" [(ngModel)]="model.pct_validation">
+                      <option *ngFor="let p of model.precents" 
+                                [value]="p.value" 
+                                [selected]="p.value==model.pct_validation">  
+                          {{p.display}} %
+                      </option>
+                  </select>
+              </div>
+        </div>
+
+        <!-- testing -->
+        <div class="form-group">
+              <label for="testing">Testing (%)</label>
+              <div class="select">
+                  <select name="testing" [(ngModel)]="model.pct_testing">
+                      <option *ngFor="let p of model.precents" 
+                                [value]="p.value" 
+                                [selected]="p.value==model.pct_testing">  
+                          {{p.display}} %
+                      </option>
+                  </select>
+              </div>
+        </div>
+
+        <!-- use cv -->
+        <div class="form-group">
+                <div class="checkbox">
+                    <input type="checkbox" name="crossval"  [(ngModel)]="model.use_cv">
+                    <label for="crossval">Use cross validation</label>
+                </div>
+                <select name="folds" [(ngModel)]="model.folds">
+                      <option *ngFor="let p of model.folds_values" 
+                                [value]="p.value" 
+                                [selected]="p.value==model.folds">  
+                          {{p.display}} Folds
+                           </option>
+                </select>
+        </div>
+         <section class="form-block">
+         <clr-datagrid>
+            <clr-dg-column>Name</clr-dg-column>
+            <clr-dg-column>Type</clr-dg-column>
+            <clr-dg-column>Role</clr-dg-column>
+
+            <clr-dg-row *ngFor="let c of model.columns">
+                <clr-dg-cell> {{c.name}} </clr-dg-cell>
+                <clr-dg-cell> {{c.type}} </clr-dg-cell>
+                <clr-dg-cell  > 
+                <div class="form-group left">
+                        <div class="radio-inline">
+                            <input 
+                            type="radio" 
+                            name="r_{{c.id}}" 
+                            id="{{c.id}}_1" 
+                            [(ngModel)]="c.role" 
+                            [value]="0"
+                            [checked]="c.role==0">
+                            <label for="{{c.id}}_1">Feature</label>
+                        </div>
+                        <div class="radio-inline">
+                            <input type="radio" 
+                            name="r_{{c.id}}" 
+                            id="{{c.id}}_2" 
+                            [(ngModel)]="c.role" 
+                            [value]="1"
+                            [checked]="c.role==1">
+                            <label for="{{c.id}}_2">Target</label>
+                        </div>    
+                </div>    
+               </clr-dg-cell>        
+            </clr-dg-row>
+         </clr-datagrid>
+     </section>  
+   <div>
+      <button *ngIf="!editing" type="submit" (click)="onSubmit()" class="btn btn-primary">Create Study</button>
+      <button *ngIf="editing"  type="submit" (click)="onSubmit()" class="btn btn-warning">Update</button>          
+    </div>
+</form>
